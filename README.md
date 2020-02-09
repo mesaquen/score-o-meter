@@ -1,4 +1,4 @@
-# Scoret-o-meter
+# Score-o-meter
 
 A simple vanilla JS powered score counter with CSS3 animations.
 
