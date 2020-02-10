@@ -1,38 +1,91 @@
-:root  {
+:root {
   --container-height: 3rem;
 }
 
-@keyframes visible { from {opacity: 0;} to {opacity: 1;}}
-@keyframes unvisible { from {opacity: 1;} to {opacity: 0;}}
+@keyframes visible {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes unvisible {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 
 @keyframes fadeIn {
-  from {color: orange; opacity: 0.3; transform: translate(-50%, var(--container-height))}
-  to% {opacity: 1; transform: translate(-50%, 0);}
+  from {
+    color: orange;
+    opacity: 0.3;
+    transform: translate(-50%, var(--container-height));
+  }
+  to% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 @keyframes fadeOut {
-  from {opacity: 1; transform: translate(-50%, 0);}
-  to {opacity: 0;transform: translate(-50%, calc( -1 * var(--container-height)))}
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-1 * var(--container-height)));
+  }
 }
 
 @keyframes buttonReveal {
-  0% {width: 48px; height: 48px; transform:  translateX(50%) scale(0);}
-  35% {width: 48px; height: 48px; transform:  translateX(50%) scale(1);}
-  100% {width: 120px; height: 48px; transform: translateX(50%)}
+  0% {
+    width: 48px;
+    height: 48px;
+    transform: translateX(50%) scale(0);
+  }
+  35% {
+    width: 48px;
+    height: 48px;
+    transform: translateX(50%) scale(1);
+  }
+  100% {
+    width: 120px;
+    height: 48px;
+    transform: translateX(50%);
+  }
 }
 
 @keyframes buttonHide {
-  0% {width: 120px; height: 48px; transform: translateX(50%)}
-  35% {width: 48px; height: 48px; transform:  translateX(50%) scale(1);}
-  100% {width: 48px; height: 48px; transform:  translateX(50%) scale(0);}
+  0% {
+    width: 120px;
+    height: 48px;
+    transform: translateX(50%);
+  }
+  35% {
+    width: 48px;
+    height: 48px;
+    transform: translateX(50%) scale(1);
+  }
+  100% {
+    width: 48px;
+    height: 48px;
+    transform: translateX(50%) scale(0);
+  }
 }
 
 * {
   outline: none;
   user-select: none;
-} 
+}
 
-html, body, .app {
+html,
+body,
+.app {
   margin: 0;
   color: white;
   height: 100%;
@@ -47,8 +100,13 @@ html, body, .app {
   color: gray;
 }
 
-.settings-button {font-size: 2rem; cursor: pointer;}
-.settings-button:hover {color: white;}
+.settings-button {
+  font-size: 2rem;
+  cursor: pointer;
+}
+.settings-button:hover {
+  color: white;
+}
 
 .container {
   position: relative;
@@ -72,12 +130,12 @@ html, body, .app {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex:1;
+  flex: 1;
   position: relative;
 }
 
 .counter:hover {
-  background: #FFFFFF22;
+  background: #ffffff22;
 }
 
 .score-container {
@@ -93,7 +151,7 @@ html, body, .app {
   top: 50%;
   left: 50%;
   font-size: 8rem;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
 }
 
 .player {
@@ -101,11 +159,11 @@ html, body, .app {
   position: absolute;
   bottom: 50%;
   transform: translateY(calc(-1 * var(--container-height) * 2));
-  display:flex;
+  display: flex;
   word-wrap: break-word;
   animation: visible 0.4s;
   animation-delay: 0.3s;
-  animation-fill-mode: backwards; 
+  animation-fill-mode: backwards;
   font-size: 3em;
 }
 
@@ -148,12 +206,11 @@ html, body, .app {
   animation: buttonReveal 0.5s forwards;
 }
 
-.show-restart span {	
+.show-restart span {
   animation: visible 0.3s;
   animation-fill-mode: backwards;
   animation-delay: 0.5s;
 }
-
 
 .hide-restart {
   display: flex;
@@ -162,9 +219,7 @@ html, body, .app {
   animation-fill-mode: backwards;
 }
 
-.hide-restart span {	
+.hide-restart span {
   animation: unvisible 0.3s;
   animation-fill-mode: forwards;
 }
-
-
