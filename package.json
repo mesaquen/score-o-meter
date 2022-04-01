@@ -9,10 +9,12 @@
   "scripts": {
     "prettier": "prettier --check \"**/*.{js,css,html,md}\"",
     "format": "prettier --write \"**/*.{js,css,html,md}\"",
-    "start": "serve -s ./"
+    "start": "serve -s ./",
+    "lint": "eslint *.js"
   },
   "devDependencies": {
-    "prettier": "^1.19.1",
-    "serve": "^11.3.0"
+    "prettier": "^2.6.1",
+    "serve": "^13.0.2",
+    "eslint": "^8.12.0"
   }
 }

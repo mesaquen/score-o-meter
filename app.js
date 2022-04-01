@@ -21,13 +21,13 @@ const p2WinsDisplay = document.querySelector('#player-two-wins')
 
 let gameOver = false
 
-const setMaxScore = value => {
+const setMaxScore = (value) => {
   maxScore.value = value
   MAX_SCORE = value
 }
 
-const getValue = el => (el ? +el.textContent : 0)
-const removeElement = el => {
+const getValue = (el) => (el ? +el.textContent : 0)
+const removeElement = (el) => {
   setTimeout(() => el.parentNode.removeChild(el), 1000)
 }
 
@@ -37,7 +37,7 @@ const showButton = () =>
     button.classList.add('show-restart')
   }, 300)
 
-hideButton = () => {
+const hideButton = () => {
   button.classList.remove('show-restart')
   button.classList.add('hide-restart')
 }
@@ -76,15 +76,18 @@ const resetGame = () => {
   hideButton()
 }
 
-const handleClick = e => {
-  const target = e.currentTarget.dataset.hasOwnProperty('playerOne')
+const handleClick = (event) => {
+  const target = Object.prototype.hasOwnProperty.call(
+    event.currentTarget.dataset,
+    'playerOne'
+  )
     ? PLAYER_ONE
     : PLAYER_TWO
   addScore(target)
 }
 
-const handleKeyDown = e => {
-  const code = e.keyCode || e.which
+const handleKeyDown = (event) => {
+  const code = event.keyCode || event.which
 
   if (code === LEFT_ARROW) {
     addScore(PLAYER_ONE)
@@ -113,17 +116,17 @@ const showModal = () => {
   modal.classList.remove('hidden')
 }
 
-const prevent = e => {
-  if (e.stopPropagation) {
-    e.stopPropagation()
+const prevent = (event) => {
+  if (event.stopPropagation) {
+    event.stopPropagation()
   }
 
-  if (e.preventDefault) {
-    e.preventDefault()
+  if (event.preventDefault) {
+    event.preventDefault()
   }
 }
 
-const handleChangeMaxScore = event => {
+const handleChangeMaxScore = (event) => {
   const {
     target: { value },
   } = event
@@ -149,7 +152,7 @@ const updateWins = () => {
   p2WinsDisplay.textContent = p2Wins
 }
 
-const addWin = player => {
+const addWin = (player) => {
   if (player === PLAYER_ONE) {
     p1Wins++
   } else {
