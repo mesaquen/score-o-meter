@@ -14,4 +14,4 @@ A simple vanilla JS powered score counter with CSS3 animations.
 
 ## Live demo
 
-You can access the live demo at [https://mesaquen.github.com/score-o-meter](https://mesaquen.github.com/score-o-meter)
+You can access the live demo at [https://mesaquen.github.io/score-o-meter](https://mesaquen.github.io/score-o-meter)
