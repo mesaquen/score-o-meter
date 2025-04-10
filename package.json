@@ -4,7 +4,7 @@
   "description": "'A vanilla JS score count keeper'",
   "main": "html.js",
   "repository": "https://github.com/mesaquen/score-o-meter.git",
-  "author": "Mesaque Francisco <mesaquenf@gmail.com>",
+  "author": "Mesaque Francisco",
   "license": "MIT",
   "scripts": {
     "prettier": "prettier --check \"**/*.{js,css,html,md}\"",
@@ -13,8 +13,8 @@
     "lint": "eslint *.js"
   },
   "devDependencies": {
-    "prettier": "^2.6.1",
-    "serve": "^13.0.2",
-    "eslint": "^8.12.0"
+    "eslint": "^9.24.0",
+    "prettier": "^3.5.3",
+    "serve": "^14.2.4"
   }
 }
