@@ -26,9 +26,9 @@ const setMaxScore = (value) => {
   MAX_SCORE = value
 }
 
-const getValue = (el) => (el ? +el.textContent : 0)
-const removeElement = (el) => {
-  setTimeout(() => el.parentNode.removeChild(el), 1000)
+const getValue = (element) => (element ? Number(element.textContent) : 0)
+const removeElement = (element) => {
+  setTimeout(() => element.parentNode.removeChild(element), 1000)
 }
 
 const showButton = () =>
@@ -98,7 +98,7 @@ const handleKeyDown = (event) => {
   }
 }
 
-const blur = () => {
+const applyBlur = () => {
   mainContainer.classList.add('blur')
 }
 
@@ -112,7 +112,7 @@ const closeModal = () => {
 }
 
 const showModal = () => {
-  blur()
+  applyBlur()
   modal.classList.remove('hidden')
 }
 
