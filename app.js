@@ -3,11 +3,23 @@ const RIGHT_ARROW = 39;
 const ENTER_KEY = 13;
 const PLAYER_ONE = '.player1';
 const PLAYER_TWO = '.player2';
+let MAX_SCORE = 12;
+const app = document.querySelector('.app');
+const modal = document.querySelector('.modal');
+const modalContainer = document.querySelector('.modal-container');
 const player1 = document.querySelector(PLAYER_ONE);
 const player2 = document.querySelector(PLAYER_TWO);
 const button = document.querySelector('.button');
+const themeSelector = document.querySelector('.dark-mode-checkbox');
+const maxScore = document.querySelector('.max-score');
+const settingsButton = document.querySelector('.settings-button');
 
 let gameOver = false;
+
+const setMaxScore = value => {
+  maxScore.value = value;
+  MAX_SCORE = value;
+};
 
 const getValue = el => (el ? +el.textContent : 0);
 const removeElement = el => {
@@ -43,7 +55,7 @@ const addScore = (target, shouldReset) => {
   nextElement.textContent = shouldReset ? 0 : nextValue;
   nextElement.classList.add('score', 'current');
 
-  if (!shouldReset && nextValue > 11) {
+  if (!shouldReset && nextValue > MAX_SCORE - 1) {
     nextElement.textContent = 'WON';
     gameOver = true;
     showButton();
@@ -77,6 +89,48 @@ const handleKeyDown = e => {
   }
 };
 
+const closeModal = () => {
+  modal.classList.add('hidden');
+};
+
+const showModal = () => {
+  modal.classList.remove('hidden');
+};
+
+const prevent = e => {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+};
+
+const handleChangeMaxScore = event => {
+  debugger;
+  const {
+    target: { value },
+  } = event;
+  setMaxScore(parseInt(value));
+  resetGame();
+};
+
+const handleThemeToggle = () => {
+  const currentTheme = app.getAttribute('data-theme');
+  const isDark = currentTheme === 'dark';
+  const nextTheme = isDark ? 'light' : 'dark';
+  app.setAttribute('data-theme', nextTheme);
+
+  if (isDark) {
+    themeSelector.classList.remove('fill');
+  } else {
+    themeSelector.classList.add('fill');
+  }
+};
+
+setMaxScore(MAX_SCORE);
+
 addScore(PLAYER_ONE);
 addScore(PLAYER_TWO);
 
@@ -84,8 +138,10 @@ window.addEventListener('keydown', handleKeyDown, false);
 player1.addEventListener('click', handleClick, false);
 player2.addEventListener('click', handleClick, false);
 button.addEventListener('click', resetGame, false);
+modalContainer.addEventListener('click', prevent, false);
+modal.addEventListener('click', closeModal, false);
+settingsButton.addEventListener('click', showModal, false);
+themeSelector.addEventListener('click', handleThemeToggle, false);
+maxScore.addEventListener('change', handleChangeMaxScore, false);
 
-window.addEventListener(
-  'load',
-  () => (document.querySelector('.app').style.visibility = 'visible')
-);
+window.addEventListener('load', () => (app.style.visibility = 'visible'));
