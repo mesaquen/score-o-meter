@@ -84,3 +84,8 @@ window.addEventListener('keydown', handleKeyDown, false);
 player1.addEventListener('click', handleClick, false);
 player2.addEventListener('click', handleClick, false);
 button.addEventListener('click', resetGame, false);
+
+window.addEventListener(
+  'load',
+  () => (document.querySelector('.app').style.visibility = 'visible')
+);
