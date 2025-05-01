@@ -137,6 +137,11 @@ body,
   position: relative;
   height: 100%;
   display: flex;
+  transition: all 0.5s ease;
+}
+
+.blur {
+  filter: blur(0.5rem);
 }
 
 .previous {
@@ -255,7 +260,7 @@ body,
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .modal-container {
@@ -267,6 +272,7 @@ body,
   min-height: 5rem;
   background: var(--bg);
   transform: translate(-50%, -50%);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.5);
 }
 
 .setting-row {

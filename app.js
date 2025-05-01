@@ -5,6 +5,7 @@ const PLAYER_ONE = '.player1';
 const PLAYER_TWO = '.player2';
 let MAX_SCORE = 12;
 const app = document.querySelector('.app');
+const mainContainer = document.querySelector('.container'); 
 const modal = document.querySelector('.modal');
 const modalContainer = document.querySelector('.modal-container');
 const player1 = document.querySelector(PLAYER_ONE);
@@ -89,11 +90,21 @@ const handleKeyDown = e => {
   }
 };
 
+const blur = () => {
+  mainContainer.classList.add('blur')
+}
+
+const removeBlur = () => {
+  mainContainer.classList.remove('blur')
+}
+
 const closeModal = () => {
   modal.classList.add('hidden');
+  removeBlur()
 };
 
 const showModal = () => {
+  blur()
   modal.classList.remove('hidden');
 };
 
