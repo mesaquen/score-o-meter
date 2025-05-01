@@ -1,0 +1,18 @@
+{
+  "name": "score-o-meter",
+  "version": "1.0.0",
+  "description": "'A vanilla JS score count keeper'",
+  "main": "html.js",
+  "repository": "https://github.com/mesaquen/score-o-meter.git",
+  "author": "Mesaque Francisco <mesaquenf@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prettier": "prettier --check \"**/*.{js,css,html,md}\"",
+    "format": "prettier --write \"**/*.{js,css,html,md}\"",
+    "start": "serve -s ./"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "serve": "^11.3.0"
+  }
+}
