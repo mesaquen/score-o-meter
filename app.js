@@ -43,7 +43,7 @@ const addScore = (target, shouldReset) => {
   nextElement.textContent = shouldReset ? 0 : nextValue;
   nextElement.classList.add('score', 'current');
 
-  if (nextValue > 11) {
+  if (!shouldReset && nextValue > 11) {
     nextElement.textContent = 'WON';
     gameOver = true;
     showButton();
