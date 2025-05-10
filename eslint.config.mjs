@@ -25,5 +25,7 @@ export default defineConfig([{
         sourceType: "module",
     },
 
-    rules: {},
+    rules: {
+        "no-negated-condition": "error"
+    },
 }]);

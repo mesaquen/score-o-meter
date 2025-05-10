@@ -1,34 +1,28 @@
-const LEFT_ARROW = 37
-const RIGHT_ARROW = 39
-const ENTER_KEY = 13
-const PLAYER_ONE = '.player1'
-const PLAYER_TWO = '.player2'
-let MAX_SCORE = 12
-const app = document.querySelector('.app')
-const mainContainer = document.querySelector('.container')
-const modal = document.querySelector('.modal')
-const modalContainer = document.querySelector('.modal-container')
-const player1 = document.querySelector(PLAYER_ONE)
-const player2 = document.querySelector(PLAYER_TWO)
-const button = document.querySelector('.button')
-const themeSelector = document.querySelector('.dark-mode-checkbox')
-const maxScore = document.querySelector('.max-score')
-const settingsButton = document.querySelector('.settings-button')
-let p1Wins = 0
-let p2Wins = 0
-const p1WinsDisplay = document.querySelector('#player-one-wins')
-const p2WinsDisplay = document.querySelector('#player-two-wins')
+import { ENTER_KEY, LEFT_ARROW, RIGHT_ARROW } from './scripts/keyboard.js'
+import PlayerInfo, { PLAYER_ONE, PLAYER_TWO } from './scripts/player.js'
+import Config from './scripts/config.js'
+import Elements, { getValue, removeElement } from './scripts/elements.js'
+
+let { MAX_SCORE } = Config
+let { p1Wins, p2Wins, player1, player2, p1WinsDisplay, p2WinsDisplay } =
+  PlayerInfo
+
+const {
+  app,
+  button,
+  mainContainer,
+  maxScore,
+  modal,
+  modalContainer,
+  settingsButton,
+  themeSelector,
+} = Elements
 
 let gameOver = false
 
 const setMaxScore = (value) => {
   maxScore.value = value
   MAX_SCORE = value
-}
-
-const getValue = (element) => (element ? Number(element.textContent) : 0)
-const removeElement = (element) => {
-  setTimeout(() => element.parentNode.removeChild(element), 1000)
 }
 
 const showButton = () =>
@@ -86,37 +80,49 @@ const handleClick = (event) => {
   addScore(target)
 }
 
+const KEYDOWN_ACTIONS = {
+  [LEFT_ARROW]: () => addScore(PLAYER_ONE),
+  [RIGHT_ARROW]: () => addScore(PLAYER_TWO),
+  [ENTER_KEY]: () => {
+    if (gameOver) {
+      resetGame()
+    }
+  },
+}
+
 const handleKeyDown = (event) => {
   const code = event.keyCode || event.which
 
-  if (code === LEFT_ARROW) {
-    addScore(PLAYER_ONE)
-  } else if (code === RIGHT_ARROW) {
-    addScore(PLAYER_TWO)
-  } else if (code === ENTER_KEY && gameOver) {
-    resetGame()
+  const action = KEYDOWN_ACTIONS[code]
+
+  if (typeof action === 'function') {
+    action()
   }
 }
 
+const addClass = (element, className) => element.classList.add(className)
+const removeClass = (element, className) => element.classList.remove(className)
+
 const applyBlur = () => {
-  mainContainer.classList.add('blur')
+  addClass(mainContainer, 'blur')
 }
 
 const removeBlur = () => {
-  mainContainer.classList.remove('blur')
+  removeClass(mainContainer, 'blur')
 }
 
 const closeModal = () => {
-  modal.classList.add('hidden')
+  addClass(modal, 'hidden')
   removeBlur()
 }
 
 const showModal = () => {
   applyBlur()
-  modal.classList.remove('hidden')
+  removeClass(modal, 'hidden')
 }
 
-const prevent = (event) => {
+// Prevents modal from closing when clicking inside container
+const preventModalClose = (event) => {
   if (event.stopPropagation) {
     event.stopPropagation()
   }
@@ -141,10 +147,10 @@ const handleThemeToggle = () => {
   app.setAttribute('data-theme', nextTheme)
 
   if (isDark) {
-    themeSelector.classList.remove('fill')
-  } else {
-    themeSelector.classList.add('fill')
+    removeClass(themeSelector, 'fill')
+    return
   }
+  addClass(themeSelector, 'fill')
 }
 
 const updateWins = () => {
@@ -167,14 +173,14 @@ setMaxScore(MAX_SCORE)
 addScore(PLAYER_ONE)
 addScore(PLAYER_TWO)
 
-window.addEventListener('keydown', handleKeyDown, false)
-player1.addEventListener('click', handleClick, false)
-player2.addEventListener('click', handleClick, false)
-button.addEventListener('click', resetGame, false)
-modalContainer.addEventListener('click', prevent, false)
-modal.addEventListener('click', closeModal, false)
-settingsButton.addEventListener('click', showModal, false)
-themeSelector.addEventListener('click', handleThemeToggle, false)
-maxScore.addEventListener('change', handleChangeMaxScore, false)
+window.addEventListener('keydown', handleKeyDown, true)
+player1.addEventListener('click', handleClick)
+player2.addEventListener('click', handleClick)
+button.addEventListener('click', resetGame)
+modalContainer.addEventListener('click', preventModalClose)
+modal.addEventListener('click', closeModal)
+settingsButton.addEventListener('click', showModal)
+themeSelector.addEventListener('click', handleThemeToggle)
+maxScore.addEventListener('change', handleChangeMaxScore)
 
 window.addEventListener('load', () => (app.style.visibility = 'visible'))
