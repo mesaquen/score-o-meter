@@ -1,6 +1,6 @@
 import Elements from './elements.js'
 
-const { app, themeSelector } = Elements
+const { app, themeSelector, mainContainer, modal, modalContainer } = Elements
 
 export const addClass = (element, ...className) => element.classList.add(...className)
 export const removeClass = (element, className) =>
@@ -18,3 +18,35 @@ export const handleThemeToggle = () => {
   }
   addClass(themeSelector, 'fill')
 }
+
+const applyBlur = () => {
+  addClass(mainContainer, 'blur')
+}
+
+const removeBlur = () => {
+  removeClass(mainContainer, 'blur')
+}
+
+export const closeModal = () => {
+  addClass(modal, 'hidden')
+  removeBlur()
+}
+
+export const showModal = () => {
+  applyBlur()
+  removeClass(modal, 'hidden')
+}
+
+// Prevents modal from closing when clicking inside container
+const preventModalClose = (event) => {
+  if (event.stopPropagation) {
+    event.stopPropagation()
+  }
+
+  if (event.preventDefault) {
+    event.preventDefault()
+  }
+}
+
+modalContainer.addEventListener('click', preventModalClose)
+modal.addEventListener('click', closeModal)

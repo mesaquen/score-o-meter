@@ -2,7 +2,7 @@ import { ENTER_KEY, LEFT_ARROW, RIGHT_ARROW } from './scripts/keyboard.js'
 import PlayerInfo, { PLAYER_ONE, PLAYER_TWO } from './scripts/player.js'
 import Config from './scripts/config.js'
 import Elements, { getValue, removeElement } from './scripts/elements.js'
-import { addClass, removeClass, handleThemeToggle } from './scripts/theme.js'
+import { addClass, removeClass, showModal, handleThemeToggle } from './scripts/theme.js'
 
 let { MAX_SCORE } = Config
 let { p1Wins, p2Wins, player1, player2, p1WinsDisplay, p2WinsDisplay } =
@@ -11,10 +11,7 @@ let { p1Wins, p2Wins, player1, player2, p1WinsDisplay, p2WinsDisplay } =
 const {
   app,
   button,
-  mainContainer,
   maxScore,
-  modal,
-  modalContainer,
   settingsButton,
   themeSelector,
 } = Elements
@@ -96,35 +93,6 @@ const handleKeyDown = (event) => {
   }
 }
 
-const applyBlur = () => {
-  addClass(mainContainer, 'blur')
-}
-
-const removeBlur = () => {
-  removeClass(mainContainer, 'blur')
-}
-
-const closeModal = () => {
-  addClass(modal, 'hidden')
-  removeBlur()
-}
-
-const showModal = () => {
-  applyBlur()
-  removeClass(modal, 'hidden')
-}
-
-// Prevents modal from closing when clicking inside container
-const preventModalClose = (event) => {
-  if (event.stopPropagation) {
-    event.stopPropagation()
-  }
-
-  if (event.preventDefault) {
-    event.preventDefault()
-  }
-}
-
 const handleChangeMaxScore = (event) => {
   const {
     target: { value },
@@ -157,8 +125,6 @@ window.addEventListener('keydown', handleKeyDown, true)
 player1.addEventListener('click', handleClick)
 player2.addEventListener('click', handleClick)
 button.addEventListener('click', resetGame)
-modalContainer.addEventListener('click', preventModalClose)
-modal.addEventListener('click', closeModal)
 settingsButton.addEventListener('click', showModal)
 themeSelector.addEventListener('click', handleThemeToggle)
 maxScore.addEventListener('change', handleChangeMaxScore)
