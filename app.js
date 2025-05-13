@@ -1,20 +1,19 @@
-import { ENTER_KEY, LEFT_ARROW, RIGHT_ARROW } from './scripts/keyboard.js'
-import PlayerInfo, { PLAYER_ONE, PLAYER_TWO } from './scripts/player.js'
+import { ENTER_KEY } from './scripts/keyboard.js'
+import PlayerInfo from './scripts/player.js'
 import Config from './scripts/config.js'
 import Elements, { getValue, removeElement } from './scripts/elements.js'
-import { addClass, removeClass, showModal, handleThemeToggle } from './scripts/theme.js'
+import {
+  addClass,
+  removeClass,
+  showModal,
+  handleThemeToggle,
+} from './scripts/theme.js'
 
 let { MAX_SCORE } = Config
-let { p1Wins, p2Wins, player1, player2, p1WinsDisplay, p2WinsDisplay } =
+let { wins, playersDisplay, players, playersIds, findPlayerIndexById } =
   PlayerInfo
 
-const {
-  app,
-  button,
-  maxScore,
-  settingsButton,
-  themeSelector,
-} = Elements
+const { app, button, maxScore, settingsButton, themeSelector } = Elements
 
 let gameOver = false
 
@@ -37,7 +36,9 @@ const hideButton = () => {
 const addScore = (target, shouldReset) => {
   if (gameOver) return
 
-  const player = target === PLAYER_ONE ? player1 : player2
+  const playerIndex = findPlayerIndexById(target)
+
+  const player = players[playerIndex]
   const prevScore = player.querySelector('.current')
   const prevValue = getValue(prevScore)
 
@@ -55,7 +56,7 @@ const addScore = (target, shouldReset) => {
   if (!shouldReset && nextValue >= MAX_SCORE) {
     nextElement.textContent = 'WON'
     gameOver = true
-    addWin(target)
+    addWin(playerIndex)
     showButton()
   }
   player.querySelector('.score-container').appendChild(nextElement)
@@ -63,8 +64,7 @@ const addScore = (target, shouldReset) => {
 
 const resetGame = () => {
   gameOver = false
-  addScore(PLAYER_ONE, true)
-  addScore(PLAYER_TWO, true)
+  playersIds.forEach((id) => addScore(id, true))
   hideButton()
 }
 
@@ -74,8 +74,6 @@ const handleClick = (event) => {
 }
 
 const KEYDOWN_ACTIONS = {
-  [LEFT_ARROW]: () => addScore(PLAYER_ONE),
-  [RIGHT_ARROW]: () => addScore(PLAYER_TWO),
   [ENTER_KEY]: () => {
     if (gameOver) {
       resetGame()
@@ -102,28 +100,29 @@ const handleChangeMaxScore = (event) => {
 }
 
 const updateWins = () => {
-  p1WinsDisplay.textContent = p1Wins
-  p2WinsDisplay.textContent = p2Wins
+  for (let index = 0; index < wins.length; index++) {
+    playersDisplay[index].textContent = wins[index]
+  }
 }
 
-const addWin = (player) => {
-  if (player === PLAYER_ONE) {
-    p1Wins++
-  } else {
-    p2Wins++
-  }
+const addWin = (index) => {
+  wins[index] = wins[index] + 1
 
   updateWins()
 }
 
 setMaxScore(MAX_SCORE)
 
-addScore(PLAYER_ONE)
-addScore(PLAYER_TWO)
-
 window.addEventListener('keydown', handleKeyDown, true)
-player1.addEventListener('click', handleClick)
-player2.addEventListener('click', handleClick)
+
+for (let id of playersIds) {
+  addScore(id)
+}
+
+for (let player of players) {
+  player.addEventListener('click', handleClick)
+}
+
 button.addEventListener('click', resetGame)
 settingsButton.addEventListener('click', showModal)
 themeSelector.addEventListener('click', handleThemeToggle)

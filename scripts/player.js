@@ -38,20 +38,21 @@ function generatePlayers() {
 
 generatePlayers()
 
-const [player1, player2] = document.querySelectorAll('[data-player]')
+const players = document.querySelectorAll('[data-player]')
 
-const [p1WinsDisplay, p2WinsDisplay] =
+const playersDisplay =
   document.querySelectorAll('[id^=player]')
 
-let [p1Wins, p2Wins] = Array.from({length: NUMBER_OF_PLAYERS}, () => 0)
+let wins = Array.from({length: NUMBER_OF_PLAYERS}, () => 0)
 
-export const [PLAYER_ONE, PLAYER_TWO] = playersIds
+function findPlayerIndexById(id) {
+  return playersIds.findIndex(item => item === id)
+}
 
 export default {
-  p1Wins,
-  p2Wins,
-  player1,
-  player2,
-  p1WinsDisplay,
-  p2WinsDisplay,
+  findPlayerIndexById,
+  playersIds,
+  wins,
+  playersDisplay,
+  players
 }
