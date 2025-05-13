@@ -2,6 +2,7 @@ import { ENTER_KEY, LEFT_ARROW, RIGHT_ARROW } from './scripts/keyboard.js'
 import PlayerInfo, { PLAYER_ONE, PLAYER_TWO } from './scripts/player.js'
 import Config from './scripts/config.js'
 import Elements, { getValue, removeElement } from './scripts/elements.js'
+import { addClass, removeClass, handleThemeToggle } from './scripts/theme.js'
 
 let { MAX_SCORE } = Config
 let { p1Wins, p2Wins, player1, player2, p1WinsDisplay, p2WinsDisplay } =
@@ -27,13 +28,13 @@ const setMaxScore = (value) => {
 
 const showButton = () =>
   setTimeout(() => {
-    button.classList.remove('hide-restart')
-    button.classList.add('show-restart')
+    removeClass(button, 'hide-restart')
+    addClass(button, 'show-restart')
   }, 300)
 
 const hideButton = () => {
-  button.classList.remove('show-restart')
-  button.classList.add('hide-restart')
+  removeClass(button, 'show-restart')
+  addClass(button, 'hide-restart')
 }
 
 const addScore = (target, shouldReset) => {
@@ -44,17 +45,17 @@ const addScore = (target, shouldReset) => {
   const prevValue = getValue(prevScore)
 
   if (prevScore) {
-    prevScore.classList.remove('current')
-    prevScore.classList.add('previous')
+    removeClass(prevScore, 'current')
+    addClass(prevScore, 'previous')
     removeElement(prevScore)
   }
 
   const nextElement = document.createElement('span')
   const nextValue = prevScore ? prevValue + 1 : prevValue
   nextElement.textContent = shouldReset ? 0 : nextValue
-  nextElement.classList.add('score', 'current')
+  addClass(nextElement, 'score', 'current')
 
-  if (!shouldReset && nextValue > MAX_SCORE - 1) {
+  if (!shouldReset && nextValue >= MAX_SCORE) {
     nextElement.textContent = 'WON'
     gameOver = true
     addWin(target)
@@ -71,12 +72,7 @@ const resetGame = () => {
 }
 
 const handleClick = (event) => {
-  const target = Object.prototype.hasOwnProperty.call(
-    event.currentTarget.dataset,
-    'playerOne'
-  )
-    ? PLAYER_ONE
-    : PLAYER_TWO
+  const target = event?.currentTarget?.dataset?.['player']
   addScore(target)
 }
 
@@ -99,9 +95,6 @@ const handleKeyDown = (event) => {
     action()
   }
 }
-
-const addClass = (element, className) => element.classList.add(className)
-const removeClass = (element, className) => element.classList.remove(className)
 
 const applyBlur = () => {
   addClass(mainContainer, 'blur')
@@ -138,19 +131,6 @@ const handleChangeMaxScore = (event) => {
   } = event
   setMaxScore(parseInt(value))
   resetGame()
-}
-
-const handleThemeToggle = () => {
-  const currentTheme = app.getAttribute('data-theme')
-  const isDark = currentTheme === 'dark'
-  const nextTheme = isDark ? 'light' : 'dark'
-  app.setAttribute('data-theme', nextTheme)
-
-  if (isDark) {
-    removeClass(themeSelector, 'fill')
-    return
-  }
-  addClass(themeSelector, 'fill')
 }
 
 const updateWins = () => {
