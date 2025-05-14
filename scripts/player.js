@@ -1,13 +1,27 @@
 let NUMBER_OF_PLAYERS = 2
 
-const playersIds = Array.from(
-  { length: NUMBER_OF_PLAYERS },
-  (_, key) => `player-${key + 1}`
-)
+let playersIds = []
+
+let wins = []
+
+function setPlayerCount() {
+  NUMBER_OF_PLAYERS = 1
+}
+
+function getPlayerCount() {
+  return NUMBER_OF_PLAYERS
+}
 
 const playersContainer = document.querySelector('.players')
 
 function generatePlayers() {
+  playersIds = Array.from(
+    { length: NUMBER_OF_PLAYERS },
+    (_, key) => `player-${key + 1}`
+  )
+
+  wins = Array.from({ length: NUMBER_OF_PLAYERS }, () => 0)
+
   for (let index = 1; index <= playersIds.length; index++) {
     const playerContainer = document.createElement('div')
     playerContainer.setAttribute(`data-player`, `player-${index}`)
@@ -38,21 +52,33 @@ function generatePlayers() {
 
 generatePlayers()
 
-const players = document.querySelectorAll('[data-player]')
+const getPlayers = () => document.querySelectorAll('[data-player]')
 
-const playersDisplay =
-  document.querySelectorAll('[id^=player]')
+const getPlayersDisplay = () => document.querySelectorAll('[id^=player]')
 
-let wins = Array.from({length: NUMBER_OF_PLAYERS}, () => 0)
+function getWins() {
+  return wins
+}
+
+function setWins(value) {
+  wins = value
+}
 
 function findPlayerIndexById(id) {
-  return playersIds.findIndex(item => item === id)
+  return playersIds.findIndex((item) => item === id)
+}
+
+function getPlayersIds() {
+  return playersIds.slice()
 }
 
 export default {
   findPlayerIndexById,
-  playersIds,
-  wins,
-  playersDisplay,
-  players
+  getPlayersIds,
+  getWins,
+  setWins,
+  getPlayersDisplay,
+  getPlayers,
+  setPlayerCount,
+  getPlayerCount,
 }

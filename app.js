@@ -10,8 +10,16 @@ import {
 } from './scripts/theme.js'
 
 let { MAX_SCORE } = Config
-let { wins, playersDisplay, players, playersIds, findPlayerIndexById } =
-  PlayerInfo
+let {
+  findPlayerIndexById,
+  getPlayerCount,
+  getPlayers,
+  getPlayersDisplay,
+  getPlayersIds,
+  getWins,
+  setWins,
+  setPlayerCount,
+} = PlayerInfo
 
 const { app, button, maxScore, settingsButton, themeSelector } = Elements
 
@@ -35,6 +43,7 @@ const hideButton = () => {
 
 const addScore = (target, shouldReset) => {
   if (gameOver) return
+  const players = getPlayers()
 
   const playerIndex = findPlayerIndexById(target)
 
@@ -64,7 +73,7 @@ const addScore = (target, shouldReset) => {
 
 const resetGame = () => {
   gameOver = false
-  playersIds.forEach((id) => addScore(id, true))
+  getPlayersIds().forEach((id) => addScore(id, true))
   hideButton()
 }
 
@@ -100,32 +109,38 @@ const handleChangeMaxScore = (event) => {
 }
 
 const updateWins = () => {
+  const displays = getPlayersDisplay()
+  const wins = getWins()
   for (let index = 0; index < wins.length; index++) {
-    playersDisplay[index].textContent = wins[index]
+    displays[index].textContent = wins[index]
   }
 }
 
 const addWin = (index) => {
+  const wins = getWins()
   wins[index] = wins[index] + 1
-
+  setWins(wins)
   updateWins()
 }
 
 setMaxScore(MAX_SCORE)
 
-window.addEventListener('keydown', handleKeyDown, true)
+function subcribeToEvents() {
+  for (let id of getPlayersIds()) {
+    addScore(id)
+  }
 
-for (let id of playersIds) {
-  addScore(id)
+  for (let player of getPlayers()) {
+    player.addEventListener('click', handleClick)
+  }
 }
 
-for (let player of players) {
-  player.addEventListener('click', handleClick)
-}
+subcribeToEvents()
 
 button.addEventListener('click', resetGame)
 settingsButton.addEventListener('click', showModal)
 themeSelector.addEventListener('click', handleThemeToggle)
 maxScore.addEventListener('change', handleChangeMaxScore)
 
+window.addEventListener('keydown', handleKeyDown, true)
 window.addEventListener('load', () => (app.style.visibility = 'visible'))
