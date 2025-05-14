@@ -11,14 +11,14 @@ of players is fixed.
 
 ## How to use
 
-- Click on the player's side of screen to increase its score count.
+- Click on the player's score on the screen to increase its score count.
 - When max score is reached a button will appear to restart the match.
-- You can customize the score limit in the settings modal by clcking the Cog
-  icon at the top-left corner on the screen.
+- You can customize the score limit, number of players and theme in the settings
+  modal by clcking the Cog icon at the top-left corner on the screen.
 
 ## Keyboard accessibility
 
-- `LEFT ARROW` or `RIGHT ARROW` to increase player's score.
+- ~~`LEFT ARROW` or `RIGHT ARROW` to increase player's score.~~ (Currently disabled due to conflict with 2+ players feature)
 - Hit `ENTER` to restart when button apears.
 
 ## Live demo
@@ -31,7 +31,6 @@ Although the current state of the project is enough to my personal needs, I do
 plan to improve and develop new features:
 
 - Customize players names.
-- Custom number of players.
 - Persist data to prevent score loss if the page is reloaded.
 - Reset button to clear all scores.
 - Undo score increase in case of wrong click/tap.

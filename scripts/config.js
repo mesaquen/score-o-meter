@@ -1,3 +1,3 @@
-let MAX_SCORE = 12
+let MAX_SCORE = 4
 
 export default { MAX_SCORE }
