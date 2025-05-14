@@ -8,7 +8,6 @@ import {
   showModal,
   handleThemeToggle,
 } from './scripts/theme.js'
-
 let { MAX_SCORE } = Config
 let {
   findPlayerIndexById,
@@ -19,9 +18,11 @@ let {
   getWins,
   setWins,
   setPlayerCount,
+  generatePlayers,
 } = PlayerInfo
 
-const { app, button, maxScore, settingsButton, themeSelector } = Elements
+const { app, button, maxScore, settingsButton, themeSelector, playerNumber } =
+  Elements
 
 let gameOver = false
 
@@ -29,6 +30,8 @@ const setMaxScore = (value) => {
   maxScore.value = value
   MAX_SCORE = value
 }
+
+playerNumber.value = getPlayerCount()
 
 const showButton = () =>
   setTimeout(() => {
@@ -82,6 +85,16 @@ const handleClick = (event) => {
   addScore(target)
 }
 
+function subcribeToEvents() {
+  for (let id of getPlayersIds()) {
+    addScore(id)
+  }
+
+  for (let player of getPlayers()) {
+    player.addEventListener('click', handleClick)
+  }
+}
+
 const KEYDOWN_ACTIONS = {
   [ENTER_KEY]: () => {
     if (gameOver) {
@@ -105,6 +118,18 @@ const handleChangeMaxScore = (event) => {
     target: { value },
   } = event
   setMaxScore(parseInt(value))
+  updateWins()
+  resetGame()
+}
+
+const handleChangePlayerNumber = (event) => {
+  const {
+    target: { value },
+  } = event
+
+  setPlayerCount(parseInt(value))
+  generatePlayers()
+  subcribeToEvents()
   resetGame()
 }
 
@@ -125,22 +150,13 @@ const addWin = (index) => {
 
 setMaxScore(MAX_SCORE)
 
-function subcribeToEvents() {
-  for (let id of getPlayersIds()) {
-    addScore(id)
-  }
-
-  for (let player of getPlayers()) {
-    player.addEventListener('click', handleClick)
-  }
-}
-
 subcribeToEvents()
 
 button.addEventListener('click', resetGame)
 settingsButton.addEventListener('click', showModal)
 themeSelector.addEventListener('click', handleThemeToggle)
 maxScore.addEventListener('change', handleChangeMaxScore)
+playerNumber.addEventListener('change', handleChangePlayerNumber)
 
 window.addEventListener('keydown', handleKeyDown, true)
 window.addEventListener('load', () => (app.style.visibility = 'visible'))

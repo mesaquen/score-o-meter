@@ -17,17 +17,23 @@
       </div>
       <div class="button"><span>Restart</span></div>
       <div class="modal hidden">
-        <div class="modal-container">
-          <h1>Settings</h1>
-          <div class="setting-row">
-            <span>Enable dark mode</span>
-            <span class="dark-mode-checkbox"></span>
+        <form>
+          <div class="modal-container">
+            <h1>Settings</h1>
+            <label class="setting-row">
+              <span>Enable dark mode</span>
+              <span class="dark-mode-checkbox"></span>
+            </label>
+            <label class="setting-row">
+              <span>Max score</span>
+              <input type="number" class="max-score" size="3" />
+            </label>
+            <label class="setting-row">
+              <span>Player number</span>
+              <input type="number" class="player-number" min="1" max="6" size="3" />
+            </label>
           </div>
-          <div class="setting-row">
-            <span>Max score</span>
-            <input type="number" class="max-score" size="3" />
-          </div>
-        </div>
+        </form>
       </div>
     </div>
     <script type="module" src="app.js"></script>

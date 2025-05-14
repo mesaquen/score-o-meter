@@ -4,8 +4,8 @@ let playersIds = []
 
 let wins = []
 
-function setPlayerCount() {
-  NUMBER_OF_PLAYERS = 1
+function setPlayerCount(value) {
+  NUMBER_OF_PLAYERS = value
 }
 
 function getPlayerCount() {
@@ -21,6 +21,10 @@ function generatePlayers() {
   )
 
   wins = Array.from({ length: NUMBER_OF_PLAYERS }, () => 0)
+
+  while (playersContainer.firstChild) {
+    playersContainer.removeChild(playersContainer.lastChild)
+  }
 
   for (let index = 1; index <= playersIds.length; index++) {
     const playerContainer = document.createElement('div')
@@ -73,6 +77,7 @@ function getPlayersIds() {
 }
 
 export default {
+  generatePlayers,
   findPlayerIndexById,
   getPlayersIds,
   getWins,

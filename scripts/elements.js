@@ -5,6 +5,7 @@ const modalContainer = document.querySelector('.modal-container')
 const button = document.querySelector('.button')
 const themeSelector = document.querySelector('.dark-mode-checkbox')
 const maxScore = document.querySelector('.max-score')
+const playerNumber = document.querySelector('.player-number')
 const settingsButton = document.querySelector('.settings-button')
 
 export function getValue(element) {
@@ -23,5 +24,6 @@ export default {
   button,
   themeSelector,
   maxScore,
+  playerNumber,
   settingsButton,
 }
