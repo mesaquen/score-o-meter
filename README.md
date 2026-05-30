@@ -35,3 +35,11 @@ plan to improve and develop new features:
 - Reset button to clear all scores.
 - Undo score increase in case of wrong click/tap.
 - Make dark/light theme respect device preferences.
+
+## Running locally
+
+If you have python installed you can easily start a server by running
+
+```bash
+python3 -m http.server
+```
